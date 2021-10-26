@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1025531251259",
+    "project_id": "chatapp-f1b58",
+    "storage_bucket": "chatapp-f1b58.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1025531251259:android:823ab6dc22b6b4d103ea1e",
+        "android_client_info": {
+          "package_name": "com.bounoua.haselkichat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1025531251259-5cf9p0msq8or4f4ad5o0i2enm6p1u1qk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bounoua.haselkichat",
+            "certificate_hash": "618962eb45e357cbca1b0b5267e504e721f72948"
+          }
+        },
+        {
+          "client_id": "1025531251259-1ncl5t29oejct8m2bm8rk972433r1fsk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBiGO_tPBXaIHNkP5JSk9mHQNg25lcRyEs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1025531251259-1ncl5t29oejct8m2bm8rk972433r1fsk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
