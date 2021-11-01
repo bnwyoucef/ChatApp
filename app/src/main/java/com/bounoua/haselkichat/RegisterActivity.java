@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -63,6 +64,13 @@ public class RegisterActivity extends AppCompatActivity {
                 createNewAccount(userName,email,password);
             }
         });
+        TextView haveAccount = findViewById(R.id.haveAccount);
+        haveAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+            }
+        });
     }
 
     private void createNewAccount(String name,String email,String password) {
@@ -94,7 +102,10 @@ public class RegisterActivity extends AppCompatActivity {
             });
         }
     }
-
+/**
+ * store the image in the storageDB with unique name(UUID)
+ * get the image path to store it in the real db like image user
+ * **/
     private void sendImageStorage() {
         UUID uniqueID = UUID.randomUUID();
         String imageName = "Images/" +uniqueID + ".jpg";
@@ -113,14 +124,19 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-
+/**
+ * chose the image from the phone
+ * **/
     private void imageChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent,1);
     }
-
+/**
+ * control the chosen image by the user
+ * the user can chose image or not
+ * **/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

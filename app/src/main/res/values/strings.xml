@@ -4,4 +4,9 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="register">Register</string>
+    <string name="login">login</string>
+    <string name="forget_your_password">Forget your password?</string>
+    <string name="create_new_account">Create new account</string>
+    <string name="send">Send</string>
+    <string name="have_account_register">Have account? <font color='#FF03DAC5'> Login</font></string>
 </resources>
