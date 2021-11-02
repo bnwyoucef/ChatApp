@@ -9,4 +9,9 @@
     <string name="create_new_account">Create new account</string>
     <string name="send">Send</string>
     <string name="have_account_register">Have account? <font color='#FF03DAC5'> Login</font></string>
+    <string name="profile">Profile</string>
+    <string name="sign_out">Sign out</string>
+    <string name="update_profile">update profile?</string>
+    <string name="click_to_change_the_image">click to change the image</string>
+    <string name="update">Update</string>
 </resources>
