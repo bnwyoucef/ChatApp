@@ -27,6 +27,7 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
     private FirebaseStorage storage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +40,12 @@ public class ProfileActivity extends AppCompatActivity {
                         String name = snapshot.child("userName").getValue().toString();
                         userName.setText(name);
                         String path = snapshot.child("image").getValue().toString();
-                        Uri uri = Uri.parse(path);
-                        Picasso.get().load(uri).into(circleImageView);
+                        if (path.equals("null")) {
+                            circleImageView.setImageResource(R.drawable.account);
+                        } else {
+                            Uri uri = Uri.parse(path);
+                            Picasso.get().load(uri).into(circleImageView);
+                        }
                     }
 
                     @Override
