@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolderUser>{
+public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolderUser> {
     private Context context;
     private ArrayList<User> usersList;
 
@@ -27,14 +27,18 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolderUser
     @NonNull
     @Override
     public ViewHolderUser onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.show_users,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.show_users, parent, false);
         return new ViewHolderUser(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderUser holder, int position) {
         holder.userName.setText(usersList.get(position).getUserName());
-        Picasso.get().load(usersList.get(position).getImagePath()).into(holder.imageView);
+        if (usersList.get(position).getImagePath().equals("null")) {
+            holder.imageView.setImageResource(R.drawable.account);
+        } else {
+            Picasso.get().load(usersList.get(position).getImagePath()).into(holder.imageView);
+        }
     }
 
     @Override
@@ -47,10 +51,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolderUser
         notifyDataSetChanged();
     }
 
-    class ViewHolderUser extends RecyclerView.ViewHolder{
+    class ViewHolderUser extends RecyclerView.ViewHolder {
         private CircleImageView imageView;
         private TextView userName;
         private MaterialCardView parentCard;
+
         public ViewHolderUser(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.recyclerImageView);

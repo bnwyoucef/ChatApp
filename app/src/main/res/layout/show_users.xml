@@ -3,23 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="7dp"
-    app:cardElevation="5dp"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="4dp"
     android:layout_marginHorizontal="5dp"
-    android:backgroundTint="#3B705F5F"
+    android:backgroundTint="#3BD6D6D6"
     android:id="@+id/parentCard"
     android:layout_marginVertical="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="5dp"
+        android:padding="10dp"
         android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/recyclerImageView"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:src="@drawable/account" />
 
         <TextView

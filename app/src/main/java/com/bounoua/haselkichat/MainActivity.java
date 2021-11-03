@@ -45,10 +45,12 @@ public class MainActivity extends AppCompatActivity {
                 String imgPath = "";
                 User user = new User(name,imgPath);
                 for (DataSnapshot ds : snapshot.getChildren()) {
-                    name = ds.child("userName").getValue().toString();
-                    imgPath = ds.child("image").getValue().toString();
-                    user = new User(name,imgPath);
-                    userArrayList.add(user);
+                    if(!FirebaseAuth.getInstance().getUid().equals(ds.getKey())) {
+                        name = ds.child("userName").getValue().toString();
+                        imgPath = ds.child("image").getValue().toString();
+                        user = new User(name,imgPath);
+                        userArrayList.add(user);
+                    }
                 }
                 adapter.notifyDataSetChanged();
                 //adapter.setUsersList(userArrayList);
