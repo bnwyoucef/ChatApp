@@ -1,7 +1,9 @@
 package com.bounoua.haselkichat;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -13,12 +15,14 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,16 +37,26 @@ public class ChatActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private EditText messageEditText;
     private FloatingActionButton sendBtn;
+    private DatabaseReference reference;
+    private String currentUserID;
+    private String otherUserID;
+    private String otherUserName;
+    private ArrayList<MessageModel> messagesList;
+    private MsgAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         initViews();
+        adapter.setMsgList(messagesList);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         Intent intent = getIntent();
         if (null != intent) {
-            String currentUserID = intent.getStringExtra(SENDER_ID);
-            String otherUserID = intent.getStringExtra(RECEIVER_ID);
-            String otherUserName = intent.getStringExtra(RECEIVER_NAME);
+            currentUserID = intent.getStringExtra(SENDER_ID);
+            otherUserID = intent.getStringExtra(RECEIVER_ID);
+            otherUserName = intent.getStringExtra(RECEIVER_NAME);
             otherUserTextView.setText(otherUserName);
             sendBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -59,6 +73,35 @@ public class ChatActivity extends AppCompatActivity {
                 finish();
             }
         });
+        reference.child("Messages").child(currentUserID).child(otherUserID).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                MessageModel model = snapshot.getValue(MessageModel.class);
+                messagesList.add(model);
+                adapter.notifyDataSetChanged();
+                recyclerView.scrollToPosition(messagesList.size()-1);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     /**
@@ -68,7 +111,6 @@ public class ChatActivity extends AppCompatActivity {
      * **/
     private void sendMessage(String currentUserID, String otherUserID, String otherUserName) {
         String msg = messageEditText.getText().toString();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         /**
          * we need this key when we remove a message from a user the message will
          * be deleted from the other user too
@@ -92,5 +134,8 @@ public class ChatActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.chatRecyclerView);
         messageEditText = findViewById(R.id.chatMessageEditTxt);
         sendBtn = findViewById(R.id.chatSendMessage);
+        reference = FirebaseDatabase.getInstance().getReference();
+        messagesList = new ArrayList<>();
+        adapter = new MsgAdapter(this);
     }
 }

@@ -7,18 +7,17 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:backgroundTint="#FFC107"
+        android:backgroundTint="#BE2196F3"
         app:cardCornerRadius="4dp"
         app:cardElevation="2dp"
         android:layout_margin="5dp">
 
         <TextView
-            android:id="@+id/userSentMessage"
+            android:id="@+id/userReceivedMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/copse"
             android:padding="10dp"
+            android:fontFamily="@font/copse"
             android:text="@string/the_user_message"
             android:textColor="@color/black"
             android:textSize="20sp" />
