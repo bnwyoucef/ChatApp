@@ -14,4 +14,8 @@
     <string name="update_profile">update profile?</string>
     <string name="click_to_change_the_image">click to change the image</string>
     <string name="update">Update</string>
+    <string name="users">Users:</string>
+    <string name="your_message">your message..</string>
+    <string name="sendmessage">sendMessage</string>
+    <string name="the_user_message">the user message</string>
 </resources>

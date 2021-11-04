@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#BE2196F3"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="2dp"
+        android:layout_margin="5dp">
+
+        <TextView
+            android:id="@+id/userReceivedMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:fontFamily="@font/copse"
+            android:text="@string/the_user_message"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+    </com.google.android.material.card.MaterialCardView>
+
+</RelativeLayout>

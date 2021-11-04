@@ -38,6 +38,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private boolean imageIsChanged;
     private String nameUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +49,12 @@ public class UpdateProfileActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 nameUser = snapshot.child("userName").getValue().toString();
                 userNameEditTxt.setText(nameUser);
-                Uri path = Uri.parse(snapshot.child("image").getValue().toString());
-                Picasso.get().load(path).into(circleImageView);
+                String pathImg = snapshot.child("image").getValue().toString();
+                if (pathImg.equals("null")) {
+                    circleImageView.setImageResource(R.drawable.account);
+                } else {
+                    Picasso.get().load(pathImg).into(circleImageView);
+                }
 
             }
 
@@ -68,16 +73,22 @@ public class UpdateProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 updateProfile();
+                Toast.makeText(UpdateProfileActivity.this, "Updated", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(UpdateProfileActivity.this, ProfileActivity.class));
             }
         });
     }
 
+    /**
+     * we update the profile if the user change the image
+     * or change the user name
+     **/
     private void updateProfile() {
         String name = userNameEditTxt.getText().toString();
-        if(TextUtils.isEmpty(name)) {
+        if (TextUtils.isEmpty(name)) {
             userNameEditTxt.setError("Enter your user name please");
             return;
-        }else if (!name.equals(nameUser)) {
+        } else if (!name.equals(nameUser)) {
             database.getReference().child("Users").child(firebaseAuth.getUid()).child("userName").setValue(name);
         }
         if (imageIsChanged) {
@@ -102,7 +113,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent,1);
+        startActivityForResult(intent, 1);
     }
 
     @Override
@@ -110,8 +121,9 @@ public class UpdateProfileActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
             imageUri = data.getData();
+            Picasso.get().load(imageUri).into(circleImageView);
             imageIsChanged = true;
-        }else {
+        } else {
             imageIsChanged = false;
         }
     }

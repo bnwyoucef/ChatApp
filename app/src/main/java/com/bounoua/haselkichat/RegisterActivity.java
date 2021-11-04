@@ -33,7 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText emailEdit,passwordEdit, userNameEdit;
+    private EditText emailEdit, passwordEdit, userNameEdit;
     private CircleImageView imageView;
     private Button registerBtn;
     private Uri imageUri;
@@ -43,11 +43,13 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
     private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initViews();
+        imageView.setImageResource(R.drawable.account);
         progressBar.setVisibility(View.INVISIBLE);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,54 +63,60 @@ public class RegisterActivity extends AppCompatActivity {
                 String userName = userNameEdit.getText().toString();
                 String email = emailEdit.getText().toString();
                 String password = passwordEdit.getText().toString();
-                createNewAccount(userName,email,password);
+                createNewAccount(userName, email, password);
             }
         });
         TextView haveAccount = findViewById(R.id.haveAccount);
         haveAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             }
         });
     }
 
-    private void createNewAccount(String name,String email,String password) {
+    private void createNewAccount(String name, String email, String password) {
         if (TextUtils.isEmpty(name)) {
             userNameEdit.setError("Enter your user name please");
             return;
-        }else if (TextUtils.isEmpty(email)) {
+        } else if (TextUtils.isEmpty(email)) {
             emailEdit.setError("Enter your email please");
             return;
-        }else if (TextUtils.isEmpty(password)) {
+        } else if (TextUtils.isEmpty(password)) {
             passwordEdit.setError("Enter your password please");
             return;
-        }else {
+        } else {
             progressBar.setVisibility(View.VISIBLE);
-            firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     progressBar.setVisibility(View.INVISIBLE);
                     if (task.isSuccessful()) {
                         database.getReference().child("Users").child(firebaseAuth.getUid()).child("userName")
                                 .setValue(name);
-                        sendImageStorage();
+                        if (imageChoosing) {
+                            sendImageStorage();
+                        }else {
+                            database.getReference().child("Users").child(firebaseAuth.getUid())
+                                    .child("image").setValue("null");
+                        }
                         Toast.makeText(RegisterActivity.this, "Account created successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
-                    }else {
-                        Toast.makeText(RegisterActivity.this,task.getResult().toString(),Toast.LENGTH_SHORT);
+                        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                    } else {
+                        Toast.makeText(RegisterActivity.this, task.getResult().toString(), Toast.LENGTH_SHORT);
                     }
                 }
             });
         }
     }
-/**
- * store the image in the storageDB with unique name(UUID)
- * get the image path to store it in the real db like image user
- * **/
+
+    /**
+     * store the image in the storageDB with unique name(UUID)
+     * get the image path to store it in the real db like image user
+     **/
     private void sendImageStorage() {
         UUID uniqueID = UUID.randomUUID();
-        String imageName = "Images/" +uniqueID + ".jpg";
+        String imageName = "Images/" + uniqueID + ".jpg";
         firebaseStorage.getReference().child(imageName).putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -124,19 +132,21 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-/**
- * chose the image from the phone
- * **/
+
+    /**
+     * chose the image from the phone
+     **/
     private void imageChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent,1);
+        startActivityForResult(intent, 1);
     }
-/**
- * control the chosen image by the user
- * the user can chose image or not
- * **/
+
+    /**
+     * control the chosen image by the user
+     * the user can chose image or not
+     **/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -144,7 +154,7 @@ public class RegisterActivity extends AppCompatActivity {
             imageUri = data.getData();
             Picasso.get().load(imageUri).into(imageView);
             imageChoosing = true;
-        }else {
+        } else {
             imageChoosing = false;
         }
     }
