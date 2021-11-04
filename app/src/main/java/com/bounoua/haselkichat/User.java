@@ -3,10 +3,12 @@ package com.bounoua.haselkichat;
 public class User {
     private String userName;
     private String imagePath;
+    private String userID;
 
-    public User(String userName, String imagePath) {
+    public User(String userName, String imagePath, String userID) {
         this.userName = userName;
         this.imagePath = imagePath;
+        this.userID = userID;
     }
 
     public String getUserName() {
@@ -23,5 +25,13 @@ public class User {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 }

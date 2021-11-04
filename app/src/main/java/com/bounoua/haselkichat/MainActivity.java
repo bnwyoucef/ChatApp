@@ -43,12 +43,13 @@ public class MainActivity extends AppCompatActivity {
                 userArrayList.clear();
                 String name ="";
                 String imgPath = "";
-                User user = new User(name,imgPath);
+                String userID = "";
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     if(!FirebaseAuth.getInstance().getUid().equals(ds.getKey())) {
                         name = ds.child("userName").getValue().toString();
                         imgPath = ds.child("image").getValue().toString();
-                        user = new User(name,imgPath);
+                        userID = ds.getKey();
+                        User user = new User(name,imgPath,userID);
                         userArrayList.add(user);
                     }
                 }
