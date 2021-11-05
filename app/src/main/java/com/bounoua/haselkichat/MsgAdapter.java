@@ -81,7 +81,10 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.MsgViewHolder> {
         this.msgList = msgList;
         notifyDataSetChanged();
     }
-
+/**
+ * NB: if you have two different cardView(different element) you have to create
+ * a different ViewHolder class
+ * **/
     class MsgViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
         MaterialCardView cardView;
@@ -96,7 +99,11 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.MsgViewHolder> {
             }
         }
     }
-
+/**
+ * this method allow you to display two different card view in one recyclerView
+ * to know which card to display you need a condition and the return type of this method
+ * is the 'viewType' parameter in the method 'onCreateViewHolder'
+ * **/
     @Override
     public int getItemViewType(int position) {
         if (msgList.get(position).getFrom().equals(FirebaseAuth.getInstance().getUid())) {

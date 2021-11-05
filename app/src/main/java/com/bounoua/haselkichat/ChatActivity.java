@@ -45,7 +45,7 @@ public class ChatActivity extends AppCompatActivity implements MsgAdapter.Remove
     private String otherUserName;
     private ArrayList<MessageModel> messagesList;
     private MsgAdapter adapter;
-
+    private String keyUnique;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -149,11 +149,15 @@ public class ChatActivity extends AppCompatActivity implements MsgAdapter.Remove
         messagesList = new ArrayList<>();
         adapter = new MsgAdapter(this);
     }
-
+/**
+ * remove the messages from the database and update the ArrayList
+ * of the messages to display the changes
+ * **/
     @Override
     public void deleteMsg(String key) {
         reference.child("Messages").child(currentUserID).child(otherUserID).child(key).removeValue();
         reference.child("Messages").child(otherUserID).child(currentUserID).child(key).removeValue();
+        keyUnique = key;
         Toast.makeText(this, "removed", Toast.LENGTH_SHORT).show();
         for (int i=0; i< messagesList.size(); i++) {
             if (messagesList.get(i).getKeyUnique().equals(key)) {
