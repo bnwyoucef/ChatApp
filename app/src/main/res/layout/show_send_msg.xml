@@ -11,6 +11,7 @@
         android:backgroundTint="#FFC107"
         app:cardCornerRadius="4dp"
         app:cardElevation="2dp"
+        android:id="@+id/senderCardView"
         android:layout_margin="5dp">
 
         <TextView

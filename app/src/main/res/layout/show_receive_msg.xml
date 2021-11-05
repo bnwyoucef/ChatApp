@@ -10,6 +10,7 @@
         android:backgroundTint="#BE2196F3"
         app:cardCornerRadius="4dp"
         app:cardElevation="2dp"
+        android:id="@+id/receiverCardView"
         android:layout_margin="5dp">
 
         <TextView

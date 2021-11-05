@@ -8,10 +8,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -30,7 +32,7 @@ import static com.bounoua.haselkichat.UserAdapter.RECEIVER_ID;
 import static com.bounoua.haselkichat.UserAdapter.RECEIVER_NAME;
 import static com.bounoua.haselkichat.UserAdapter.SENDER_ID;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity implements MsgAdapter.RemoveMessageCallBack {
 
     private TextView otherUserTextView;
     private ImageView backArrow;
@@ -43,6 +45,7 @@ public class ChatActivity extends AppCompatActivity {
     private String otherUserName;
     private ArrayList<MessageModel> messagesList;
     private MsgAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,25 +64,33 @@ public class ChatActivity extends AppCompatActivity {
             sendBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    sendMessage(currentUserID,otherUserID,otherUserName);
-                    messageEditText.setText("");
+                    if (!messageEditText.getText().toString().equals("")) {
+                        sendMessage(currentUserID, otherUserID, otherUserName);
+                        messageEditText.setText("");
+                    }
                 }
             });
         }
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ChatActivity.this,MainActivity.class));
+                startActivity(new Intent(ChatActivity.this, MainActivity.class));
                 finish();
             }
         });
+
+
+        /**
+         * get all the user messages
+         * **/
         reference.child("Messages").child(currentUserID).child(otherUserID).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 MessageModel model = snapshot.getValue(MessageModel.class);
+                model.setKeyUnique(snapshot.getKey());
                 messagesList.add(model);
                 adapter.notifyDataSetChanged();
-                recyclerView.scrollToPosition(messagesList.size()-1);
+                recyclerView.scrollToPosition(messagesList.size() - 1);
             }
 
             @Override
@@ -89,7 +100,7 @@ public class ChatActivity extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -108,7 +119,7 @@ public class ChatActivity extends AppCompatActivity {
      * to send message first we need to register it to the database with the userId of the sender
      * and the receiver and a key we will use it when modified a message that message need to
      * update in the two users messages
-     * **/
+     **/
     private void sendMessage(String currentUserID, String otherUserID, String otherUserName) {
         String msg = messageEditText.getText().toString();
         /**
@@ -116,9 +127,9 @@ public class ChatActivity extends AppCompatActivity {
          * be deleted from the other user too
          * **/
         String key = reference.child("Messages").child(currentUserID).child(otherUserID).push().getKey();
-        HashMap<String,String> msgInformation = new HashMap<>();
-        msgInformation.put("message",msg);
-        msgInformation.put("from",currentUserID);
+        HashMap<String, String> msgInformation = new HashMap<>();
+        msgInformation.put("message", msg);
+        msgInformation.put("from", currentUserID);
         reference.child("Messages").child(currentUserID).child(otherUserID).child(key).setValue(msgInformation)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -137,5 +148,18 @@ public class ChatActivity extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference();
         messagesList = new ArrayList<>();
         adapter = new MsgAdapter(this);
+    }
+
+    @Override
+    public void deleteMsg(String key) {
+        reference.child("Messages").child(currentUserID).child(otherUserID).child(key).removeValue();
+        reference.child("Messages").child(otherUserID).child(currentUserID).child(key).removeValue();
+        Toast.makeText(this, "removed", Toast.LENGTH_SHORT).show();
+        for (int i=0; i< messagesList.size(); i++) {
+            if (messagesList.get(i).getKeyUnique().equals(key)) {
+                messagesList.remove(i);
+            }
+        }
+        adapter.notifyDataSetChanged();
     }
 }
