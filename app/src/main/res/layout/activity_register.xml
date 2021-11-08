@@ -7,64 +7,91 @@
     android:orientation="vertical"
     tools:context=".RegisterActivity">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profileImage"
-        android:layout_width="170dp"
-        android:layout_height="170dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:src="@color/blueWhite" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/ic_wave__1_"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileImage"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/account" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register"
+        android:layout_gravity="center"
+        android:textSize="24sp"
+        android:textColor="@color/blueWhite"
+        android:textStyle="bold"/>
     <EditText
         android:id="@+id/userNameRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:background="@drawable/strock_edit"
-        android:padding="12dp"
         android:layout_marginTop="30dp"
-        android:hint="@string/user_name" />
+        android:background="@drawable/strock_edit"
+        android:hint="@string/user_name"
+        android:drawableStart="@drawable/ic_baseline_account_circle_24"
+        android:drawablePadding="5dp"
+        android:padding="12dp" />
 
     <EditText
         android:id="@+id/emailRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="30dp"
-        android:padding="12dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/strock_edit"
-        android:hint="@string/email" />
+        android:hint="@string/email"
+        android:drawableStart="@drawable/ic_baseline_email_24"
+        android:drawablePadding="5dp"
+        android:padding="12dp" />
 
     <EditText
         android:id="@+id/passwordRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/strock_edit"
-        android:padding="12dp"
-        android:hint="@string/password" />
+        android:hint="@string/password"
+        android:drawableStart="@drawable/ic_baseline_lock_24"
+        android:drawablePadding="5dp"
+        android:padding="12dp" />
+
     <ProgressBar
+        android:id="@+id/progressBarRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        
-        android:id="@+id/progressBarRegister"/>
+        android:theme="@style/progressStyle" />
 
     <Button
         android:id="@+id/buttonRegister"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:text="@string/register" />
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/strock_btn"
+        android:text="@string/register"
+        app:backgroundTint="@color/blueWhite" />
+
     <TextView
+        android:id="@+id/haveAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/have_account_register"
         android:layout_gravity="center"
-        android:textColor="#000000"
-        android:textSize="16sp"
         android:layout_marginTop="20dp"
-        android:id="@+id/haveAccount"/>
+        android:text="@string/have_account_register"
+        android:textColor="#000000"
+        android:layout_weight="1"
+        android:textSize="20sp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/footer"/>
 </LinearLayout>
