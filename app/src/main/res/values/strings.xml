@@ -18,4 +18,6 @@
     <string name="your_message">your message..</string>
     <string name="sendmessage">sendMessage</string>
     <string name="the_user_message">the user message</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="new_user_create_account">New user?Create account</string>
 </resources>
