@@ -16,7 +16,8 @@
         <activity android:name=".ResetPassword" />
         <activity android:name=".RegisterActivity"
             android:windowSoftInputMode="adjustResize|adjustPan"/>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"
+            android:theme="@style/Theme.main"/>
         <activity android:name=".LoginActivity"
             android:windowSoftInputMode="adjustPan|adjustResize">
             <intent-filter>

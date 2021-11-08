@@ -20,4 +20,6 @@
     <string name="the_user_message">the user message</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="new_user_create_account">New user?Create account</string>
+    <string name="choose_user_to_discuss_with">Choose user to discuss with:</string>
+    <string name="reset_password">Reset Password</string>
 </resources>

@@ -7,6 +7,10 @@
     android:orientation="vertical"
     tools:context=".ProfileActivity">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/ic_wave__1_"/>
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageProfileActivity"
         android:layout_width="200dp"
@@ -22,8 +26,9 @@
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:text="@string/user_name"
-        android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:textColor="@color/blueWhite"
+        android:textStyle="bold"
+        android:textSize="22sp" />
 
     <TextView
         android:id="@+id/updateProfileTxt"
@@ -32,6 +37,11 @@
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
         android:text="@string/update_profile"
-        android:textColor="@color/black"
-        android:textSize="18sp" />
+        android:textColor="@color/blueWhite"
+        android:layout_weight="1"
+        android:textSize="22sp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/footer"/>
 </LinearLayout>

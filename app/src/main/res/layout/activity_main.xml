@@ -5,19 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#19E7008A"
     tools:context=".MainActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/users"
-        android:textSize="18sp"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/black"/>
-
+        android:text="@string/choose_user_to_discuss_with"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@color/blueWhite"
+        android:padding="10dp"/>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/recyclerView"
+        android:layout_marginHorizontal="5dp"
         android:layout_marginTop="20dp"/>
 </LinearLayout>

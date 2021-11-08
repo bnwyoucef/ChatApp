@@ -8,8 +8,9 @@
     tools:context=".ChatActivity">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#19E7008A"
         android:padding="10dp">
 
         <ImageView
@@ -24,7 +25,7 @@
             android:text="@string/user_name"
             android:padding="9dp"
             android:textSize="22sp"
-            android:textColor="@color/black"
+            android:textColor="@color/blueWhite"
             android:layout_marginStart="10dp"
             android:id="@+id/chatOtherUserName"/>
 
@@ -33,14 +34,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:background="#19E7008A"
         android:id="@+id/chatRecyclerView"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="10dp"
-
-        android:background="#D8D8D8">
+        android:background="#41E7008A">
 
         <EditText
             android:layout_width="wrap_content"
